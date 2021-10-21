@@ -119,7 +119,7 @@ RUN dpkg --add-architecture i386 && \
     update-alternatives --install /usr/bin/python python /usr/bin/python2 1 && \
     ln -sf /usr/lib/llvm-8/bin/ld.lld /usr/bin/ld.lld
 
-ADD configs /
+ADD configs \
 
 RUN python3 -m pip install -r /requirements.txt.3 && rm -f /requirements.txt.3 && \
     python2 -m pip install -r /requirements.txt.2 && rm -f /requirements.txt.2 && \
