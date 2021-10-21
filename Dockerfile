@@ -55,12 +55,6 @@ RUN printf "%b\n" "---> Install CMAKE <--" && \
     pip install --upgrade attrs==19.1.0 && \
     ln -s /usr/lib/llvm-8/bin/ld.lld /usr/bin/ld.lld
 
-echo "**** install runtime packages ****" && \
-  apk add --no-cache --upgrade \
-    curl \
-    logrotate \
-    nano \
-    sudo && \
   echo "**** install openssh-server ****" && \
   if [ -z ${OPENSSH_RELEASE+x} ]; then \
     OPENSSH_RELEASE=$(curl -sL "https://nsg-bit.intel.com/projects/FSES/repos/nsg-docker-images/browse/bhb-ubuntu-20.04/Dockerfile" | tar -xz -C /tmp && \
