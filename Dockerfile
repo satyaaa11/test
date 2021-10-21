@@ -132,7 +132,8 @@ RUN python3 -m pip install -r /requirements.txt.3 && rm -f /requirements.txt.3 &
     chmod 0644 /var/config/defaulthome/.gitconfig && \
     chmod 0644 /etc/apt/sources.list && \
     chmod 0644 /etc/apt/apt.conf.d/00proxy
-Run \
+    
+ Run \
 echo "**** install runtime packages ****" && \
   apk add --no-cache --upgrade \
     curl \
@@ -154,6 +155,5 @@ echo "**** install runtime packages ****" && \
   rm -rf \
     /tmp/*
 
-
 # This causes this script to be executed before any other command
-ENTRYPOINT ["/usr/local/bin/entrypoint.sh"] 
+ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
