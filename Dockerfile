@@ -78,4 +78,4 @@ echo "**** install runtime packages ****" && \
 
 
 # This causes this script to be executed before any other command
-ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
+ENTRYPOINT ["/usr/local/bin/entrypoint.sh" "java"]
