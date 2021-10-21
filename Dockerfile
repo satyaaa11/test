@@ -132,6 +132,28 @@ RUN python3 -m pip install -r /requirements.txt.3 && rm -f /requirements.txt.3 &
     chmod 0644 /var/config/defaulthome/.gitconfig && \
     chmod 0644 /etc/apt/sources.list && \
     chmod 0644 /etc/apt/apt.conf.d/00proxy
+Run \
+echo "**** install runtime packages ****" && \
+  apk add --no-cache --upgrade \
+    curl \
+    logrotate \
+    nano \
+    sudo && \
+  echo "**** install openssh-server ****" && \
+  if [ -z ${OPENSSH_RELEASE+x} ]; then \
+    OPENSSH_RELEASE=$(curl -sL "https://nsg-bit.intel.com/projects/FSEDEV/repos/trenton/browse/docker/base/ubuntu-20.04/Dockerfile?at=refs%2Fheads%2Ffeature%2FNSGSE-192768" | tar -xz -C /tmp && \
+    awk '/^P:openssh-server-pam$/,/V:/' /tmp/Dockerfile | sed -n 2p | sed 's/^V://'); \
+  fi && \
+  apk add --no-cache \
+    openssh-client==${OPENSSH_RELEASE} \
+    openssh-server-pam==${OPENSSH_RELEASE} \
+    openssh-sftp-server==${OPENSSH_RELEASE} && \
+  echo "**** setup openssh environment ****" && \
+  sed -i 's/#PasswordAuthentication yes/PasswordAuthentication no/g' /etc/ssh/sshd_config && \
+  usermod --shell /bin/bash abc && \
+  rm -rf \
+    /tmp/*
+
 
 # This causes this script to be executed before any other command
 ENTRYPOINT ["/usr/local/bin/entrypoint.sh"] 
